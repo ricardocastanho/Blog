@@ -2,6 +2,10 @@ const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
 const connection = require("./database/database")
+const categoriesController = require("./categories/categoriesController")
+const articlesController = require("./articles/articlesController")
+const article = require("./articles/articles")
+const categories = require("./categories/category")
 
 //Database
 connection
@@ -14,16 +18,15 @@ connection
     })
 
 //
+app.use("/", categoriesController)
+app.use("/", articlesController)
+
+//
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 //Body Parser
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
-
-//Rotas
-app.get("/", function (req, res) {
-    res.render('index')
-})
 
 //Servidor
 app.listen(8000, function (error) {
