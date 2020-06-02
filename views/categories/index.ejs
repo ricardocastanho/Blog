@@ -1,0 +1,47 @@
+<%- include('../../views/layouts/header'); %>
+
+<body>
+    <%- include('../../views/layouts/navbar'); %>
+    <div class="container">
+        <h3>Categorias</h3>
+        <br>
+        <a href="/admin/categories/create" class="btn btn-sm btn-success">Nova Categoria</a>
+        <br><br>
+        <table class="table table-bordered table-ligth">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Slug</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% categories.forEach(categories => { %>
+                    <tr>
+                        <td scope="row"> <%= categories.id %> </td>
+                        <td scope="row"> <%= categories.title %> </td>
+                        <td scope="row"> <%= categories.slug %> </td>
+                        <td scope="row">
+                            <a href="/admin/categories/edit/<%= categories.id %>" class="btn btn-sm btn-warning">Editar</a>
+                            <form method="POST" action="/admin/categories/delete" style="display: inline;" onsubmit="confirmar(event, this)">
+                                <input type="hidden" name="id" value="<%= categories.id %>">
+                                <button class="btn btn-sm btn-danger" type="submit">Deletar</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function confirmar(event, form){
+            event.preventDefault()
+            var decision = confirm("Você tem certeza que deseja apagar essa categoria?")
+            if(decision){
+                form.submit()
+            }
+        }
+    </script>
+</body>
+<%- include('../../views/layouts/footer'); %>

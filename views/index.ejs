@@ -1,6 +1,27 @@
-<%- include('../views/layouts/header'); %>
+<%- include('./layouts/header'); %>
 
 <body>
-<%- include('../views/layouts/navbar'); %>
+    <%- include('./layouts/homenavbar'); %>
+    <div class="container">
+        <h3>Artigos</h3>
+        <div class="jumbotron">
+            <h1 class="display-4">Bem vindo</h1>
+            <p class="lead">Este é um simples blog do Ricardo</p>
+            <hr class="my-4">
+            <p>Mais detalhes abaixo...</p>
+            <a class="btn btn-primary btn-sm" href="#" role="button">Learn more</a>
+          </div>
+        <% articles.forEach(articles=> { %>
+            <div class="card">
+                <div class="card-header">
+                    <%= articles.title %>
+                </div>
+                <div class="card-body">
+                    <a href="#" class="btn btn-sm btn-success">Ler Artigo</a>
+                </div>
+            </div>
+            <br>
+        <% }) %>
+    </div>
 </body>
-<%- include('../views/layouts/footer'); %>
+<%- include('./layouts/footer'); %>
