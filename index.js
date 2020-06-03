@@ -7,6 +7,7 @@ const articlesController = require("./articles/articlesController")
 const article = require("./articles/articles")
 const categories = require("./categories/category")
 const Article = require("./articles/articles")
+const Category = require("./categories/category")
 
 //Database
 connection
@@ -31,8 +32,52 @@ app.use(bodyParser.json())
 
 //Rota para homepage
 app.get("/", function(req, res) {
-    Article.findAll().then(articles => {
-        res.render('index', {articles: articles})
+    Article.findAll({
+        order: [
+            ['id', 'DESC']
+        ]
+    }).then(articles => {
+        Category.findAll().then(categories => {
+            res.render('index', {articles: articles, categories: categories})
+        })
+    })
+})
+app.get("/:slug", function(req, res) {
+    slug = req.params.slug
+    Article.findOne({
+        where: {
+            slug: slug
+        }
+    }).then(articles => {
+        if(articles != undefined){
+            Category.findAll().then(categories => {
+                res.render('article', {articles: articles, categories: categories})
+            })
+        }else{
+            res.redirect("/")
+        }
+    }).catch( err => {
+            res.redirect("/")
+    })
+})
+app.get("/category/:slug", function(req, res) {
+    var slug = req.params.slug
+    Category.findOne({
+        where: {
+            slug: slug
+        },
+        include: [{model: Article}]
+    }).then(category => {
+        if(category != undefined){
+            Category.findAll()
+            .then(categories => {
+                res.render('index', {articles: category.articles, categories: categories})
+            })
+        }else{
+            res.redirect("/")
+        }
+    }).catch(err => {
+        res.redirect("/")
     })
 })
 

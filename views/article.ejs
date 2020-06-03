@@ -1,0 +1,17 @@
+<%- include('./layouts/header'); %>
+
+<body>
+    <%- include('./layouts/homenavbar'); %>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <%- articles.title %>
+            </div>
+            <div class="card-body">
+                <%- articles.body %>
+            </div>
+        </div>
+        <br>
+    </div>
+</body>
+<%- include('./layouts/footer'); %>

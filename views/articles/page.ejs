@@ -1,7 +1,7 @@
-<%- include('./layouts/header'); %>
+<%- include('../layouts/header'); %>
 
 <body>
-    <%- include('./layouts/homenavbar'); %>
+    <%- include('../layouts/homenavbar'); %>
     <div class="container">
         <h3>Artigos</h3>
         <div class="jumbotron">
@@ -11,7 +11,7 @@
             <p>Mais detalhes abaixo...</p>
             <a class="btn btn-primary btn-sm" href="#" role="button">Mais Detalhes</a>
         </div>
-        <% articles.forEach(articles => { %>
+        <% result.articles.row.forEach(articles => { %>
         <div class="card">
             <div class="card-header">
                 <%= articles.title %>
@@ -24,4 +24,4 @@
         <% }) %>
     </div>
 </body>
-<%- include('./layouts/footer'); %>
+<%- include('../layouts/footer'); %>
