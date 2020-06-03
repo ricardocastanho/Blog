@@ -1,11 +1,11 @@
 const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
+const session = require("express-session")
 const connection = require("./database/database")
 const categoriesController = require("./categories/categoriesController")
 const articlesController = require("./articles/articlesController")
-const article = require("./articles/articles")
-const categories = require("./categories/category")
+const usersController = require("./users/usersController")
 const Article = require("./articles/articles")
 const Category = require("./categories/category")
 
@@ -19,9 +19,15 @@ connection
         console.log(error)
     })
 
+//Session
+app.use(session({
+    secret: "asodijsoidaosidj", cookie: {maxAge: 30000}
+}))
+
 //utilizando as rotas dos controladores
 app.use("/", categoriesController)
 app.use("/", articlesController)
+app.use("/", usersController)
 
 //ejs e ajeitando o public
 app.set('view engine', 'ejs')
@@ -42,6 +48,7 @@ app.get("/", function(req, res) {
         })
     })
 })
+
 app.get("/:slug", function(req, res) {
     slug = req.params.slug
     Article.findOne({
