@@ -13,12 +13,12 @@ router.get("/admin/users/login", function(req, res) {
 })
 
 router.get("/admin/users/logout", auth, function(req, res) {
-    res.render("users/create")
+    req.session.user = undefined
+    res.redirect("/admin/users/login")
 })
 
 router.get("/admin/users/create", auth, function(req, res) {
-    req.session.user = undefined
-    res.redirect("/admin/users/login")
+    res.render("users/create")    
 })
 
 router.post("/admin/users/create", function(req, res) {
@@ -57,7 +57,7 @@ router.post("/admin/users/auth", function(req, res) {
                 res.redirect("/")
             }
         }else{
-            res.redirect("/admin/users/auth")
+            res.redirect("/admin/users/login")
         }
     })
 })
